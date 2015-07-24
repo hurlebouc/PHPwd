@@ -1,28 +1,5 @@
 <?php
-function hexToBase64($hex)
-{
-  $base16Chars = array_flip(str_split('0123456789abcdef'));
-  $base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-';
-  $hex = strtolower($hex);
-  $hexLen = strlen($hex);
-  $buffer = 0;
-  $bufferedBits = 0;
-  $base64 = '';
-  for ($i = 0; $i < $hexLen; $i++) {
-    $buffer = ($buffer << 4) | $base16Chars[$hex[$i]];
-    $bufferedBits += 4;
-    if ($bufferedBits >= 6) {
-      $bufferedBits -= 6;
-      $base64 .= $base64Chars[($buffer >> $bufferedBits) & 63];
-      $buffer &= (1 << $bufferedBits) - 1;
-    }
-  }
-  if ($bufferedBits) {
-    $base64 .= $base64Chars[$buffer << (6 - $bufferedBits)];
-  }
-  $base64 .= str_repeat('=', $hexLen % 3);
-  return $base64;
-}
+include('base64.php');
 $n = $_GET['n'];
 $pwd = $_GET['pwd'];
 $res = $pwd;
